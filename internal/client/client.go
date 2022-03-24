@@ -33,7 +33,7 @@ const (
 	increase. */
 	pollIncFactor = 1.5
 	/* pollMin is the minimum poll interval. */
-	pollMin = time.Millisecond
+	pollMin = time.Nanosecond
 )
 
 /* Coders. */
