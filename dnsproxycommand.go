@@ -43,8 +43,8 @@ func main() {
 		)
 		pollMax = flag.Duration(
 			"poll-max",
-			3*time.Second,
-			"Maximum client poll `interval` (plus jitter)",
+			5*time.Second,
+			"Maximum client poll `interval` (less jitter)",
 		)
 		pruneInterval = flag.Duration(
 			"prune-interval",
