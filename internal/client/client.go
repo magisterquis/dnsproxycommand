@@ -6,7 +6,7 @@ package client
  * Client side of dnsproxycommand
  * By J. Stuart McMurray
  * Created 20220323
- * Last Modified 20220324
+ * Last Modified 20220325
  */
 
 import (
@@ -168,11 +168,17 @@ func (c *client) proxyBack(done chan<- error) {
 		c.pollCur = time.Duration(float64(c.pollCur) * pollIncFactor)
 		if c.pollCur > c.pollMax {
 			c.pollCur = c.pollMax
+		} else if 0 == c.pollCur {
+			c.pollCur = pollMin /* Shouldn't be needed */
 		}
 		/* Don't actually sleep the full time, to confuse anything
 		looking for periodic requests (just in case our labels aren't
 		bad enough). */
-		st := time.Duration(rand.Int63n(int64(c.pollCur)))
+		max := int64(c.pollCur)
+		if 0 == max { /* Shouldn't be needed. */
+			max = 10
+		}
+		st := time.Duration(rand.Int63n(max))
 		time.Sleep(st)
 	}
 }
